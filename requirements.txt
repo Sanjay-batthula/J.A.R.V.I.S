@@ -8,3 +8,4 @@ pvporcupine
 pyaudio
 pywhatkit
 opencv-python
+openai==1.86.0
