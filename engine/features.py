@@ -34,15 +34,25 @@ def chatbot(query):
             
         user_input = query.lower().strip()
         
-        # Add context for better responses
-        prompt = f"As {ASSISTANT_NAME}, {user_input}"
+        # Enhanced prompt with JARVIS personality and context
+        system_prompt = (
+            f"You are {ASSISTANT_NAME}, an advanced AI assistant created by Sanjay. "
+            "Respond in a helpful, slightly witty manner while maintaining professionalism. "
+            "Keep responses concise and practical. "
+            "When discussing technical topics, provide clear explanations. "
+            "User query: "
+        )
         
-        # Generate response with explicit content structure
+        prompt = system_prompt + user_input
+        
+        # Generate response with custom parameters
         response = model.generate_content(
             contents=prompt,
             generation_config={
-                "temperature": 0.7,
-                "max_output_tokens": 1024
+                "temperature": 0.8,  # Slightly more creative
+                "max_output_tokens": 1024,
+                "top_p": 0.9,
+                "top_k": 40
             }
         )
         
