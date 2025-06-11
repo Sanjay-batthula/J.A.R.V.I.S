@@ -15,10 +15,11 @@ import pvporcupine
 import pyaudio
 import pywhatkit as kit
 
+
 from engine.command import speak
 from engine.config import ASSISTANT_NAME
 from engine.helper import extract_yt_term, remove_words
-
+from hugchat import hugchat
 con = sqlite3.connect("jarvis.db")
 cursor = con.cursor()
 
@@ -65,26 +66,23 @@ def opencommand(query):
             speak(f"Something went wrong: {str(e)}")
             
 
-import pyautogui
-import time
-
-
-
 def playyoutube(query):
     search_term = extract_yt_term(query)
     speak("Playing "+search_term+" on YouTube")
     kit.playonyt(search_term)
 
 def hotword():
-    porcupine=None
-    paud=None
-    audio_stream=None
+    porcupine = None
+    paud = None
+    audio_stream = None
     try:
-       
         # pre trained keywords    
-        porcupine=pvporcupine.create(keywords=["jarvis","alexa"]) 
-        paud=pyaudio.PyAudio()
-        audio_stream=paud.open(rate=porcupine.sample_rate,channels=1,format=pyaudio.paInt16,input=True,frames_per_buffer=porcupine.frame_length)
+        porcupine = pvporcupine.create(
+            access_key="ZNIARtc5NLQpiily58Bta3MBl7kv3IM5hHYWXXNjBf6JNea/yGVQjw==",
+            keywords=["jarvis", "alexa"]
+        )
+        paud = pyaudio.PyAudio()
+        audio_stream = paud.open(rate=porcupine.sample_rate, channels=1, format=pyaudio.paInt16, input=True, frames_per_buffer=porcupine.frame_length)
         
         # loop for streaming
         while True:
@@ -180,10 +178,10 @@ def whatsapp(mobile_no, message, flag, name):
 # chat bot 
 def chatbot(query):
     user_input = query.lower()
-    chatbott = hugchat.ChatBot(cookie_path="engine\\cookies.json")
-    idd = chatbott.new_conversation()
-    chatbott.change_conversation(idd)
-    response =  chatbott.chat(user_input)
+    chatbot = hugchat.ChatBot(cookie_path="engine\cookies.json")
+    id = chatbot.new_conversation()
+    chatbot.change_conversation(id)
+    response =  chatbot.chat(user_input)
     print(response)
     speak(response)
     return response

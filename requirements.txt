@@ -1,0 +1,10 @@
+eel
+hugchat
+pyautogui
+playsound
+playsound==1.2.2
+eel
+pvporcupine
+pyaudio
+pywhatkit
+opencv-python
